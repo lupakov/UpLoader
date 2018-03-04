@@ -46,6 +46,7 @@ public class Preview extends JPanel implements ActionListener , ChangeListener{
 	protected JPanel jpnlTableControls;
 	
 	public Preview() {
+		prepareSrc();
 		prepareView();
 	
 		
@@ -58,6 +59,9 @@ public class Preview extends JPanel implements ActionListener , ChangeListener{
 
 	
 	protected void prepareSrc(File file) throws IOException {
+		
+	}
+	protected void prepareSrc() {
 		
 	}
 	

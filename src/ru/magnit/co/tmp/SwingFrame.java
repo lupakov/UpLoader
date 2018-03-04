@@ -59,7 +59,7 @@ public class SwingFrame {
 		jtb = new JToolBar();
 		jtb.setFloatable(false);
 		jfrm.add(jpnlMain);
-		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("txt.png"));
+		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("/res/txt.png"));
 		JButton jbOpenTxt = new JButton(openTxtIcon);
 
 		
@@ -86,7 +86,7 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenTxt);
-		Icon openXlIcon = new ImageIcon(this.getClass().getResource("xl.png"));
+		Icon openXlIcon = new ImageIcon(this.getClass().getResource("/res/xl.png"));
 		JButton jbOpenXL = new JButton(openXlIcon);
 		
 		jbOpenXL.addActionListener(new ActionListener() {
@@ -111,7 +111,27 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenXL);
-		Icon uploadIcon = new ImageIcon(this.getClass().getResource("upload.png"));
+		JButton jbOpenSQL = new JButton("SQL");
+		jbOpenSQL.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+		
+			
+					jpnlView = new SQLPreview();
+					jpnlMain.removeAll();
+					jpnlMain.add(jpnlView);
+					//jfrm.add(jpnlView);
+					jfrm.revalidate();
+					jfrm.repaint();
+					loadType = 3;
+			
+				
+				
+			}
+		});
+		jtb.add(jbOpenSQL);
+		Icon uploadIcon = new ImageIcon(this.getClass().getResource("/res/upload.png"));
 		JButton jbLoad = new JButton(uploadIcon);
 		jbLoad.addActionListener(new ActionListener() {
 			
