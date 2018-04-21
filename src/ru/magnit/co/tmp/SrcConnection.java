@@ -31,5 +31,49 @@ public class SrcConnection {
 		return con;
 		
 	}
+	
+	private String getUrl() {
+		switch (this.serverType) {
+		case "MS SQL":
+			return getMsSqlUrl();
+		case "Teradata":
+			return getTeradataUrl();
+		}
+		return "";
+		
+	}
+	private String getMsSqlUrl() {
+		StringBuilder sUrl = new StringBuilder();
+		sUrl.append("jdbc:sqlserver://");
+		sUrl.append(this.serverAddress);
+		sUrl.append(";");
+		if(this.trusted) {
+			sUrl.append("integratedSecurity=true;");
+		} else {
+			sUrl.append("user=");
+			sUrl.append(this.user);
+			sUrl.append(";");
+			sUrl.append("password=");
+			sUrl.append(this.password);
+			sUrl.append(";");
+		}
+		return sUrl.toString();
+	}
+	private String getTeradataUrl() {
+		StringBuilder sUrl = new StringBuilder();
+		sUrl.append("jdbc:teradata://" );
+		sUrl.append(this.serverAddress);
+		sUrl.append("/");
+		sUrl.append("LOGMECH=");
+		sUrl.append(this.logMech);
+		sUrl.append(",");
+		sUrl.append("USER=");
+		sUrl.append(this.user);
+		sUrl.append(",");
+		sUrl.append("PASSWORD=");
+		sUrl.append(this.password);
+		
+		return sUrl.toString();
+	}
 
 }
