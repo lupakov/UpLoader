@@ -20,13 +20,13 @@ public class SrcConnection {
 		this.trusted = trusted;
 		this.user = user;
 		this.password = password;
+		this.driver = getDriverName();
 		
 	}
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		Connection con = null;
-		String connectionString = "jdbc:sqlserver://localhost;integratedSecurity=true;";
-		driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		Class.forName(driver);
+		String connectionString = getUrl();
+		Class.forName(this.driver);
 		con = DriverManager.getConnection(connectionString);
 		return con;
 		
@@ -40,8 +40,8 @@ public class SrcConnection {
 			return getTeradataUrl();
 		}
 		return "";
-		
 	}
+	
 	private String getMsSqlUrl() {
 		StringBuilder sUrl = new StringBuilder();
 		sUrl.append("jdbc:sqlserver://");
@@ -74,6 +74,16 @@ public class SrcConnection {
 		sUrl.append(this.password);
 		
 		return sUrl.toString();
+	}
+	
+	private String getDriverName() {
+		switch (this.serverType) {
+		case "MS SQL":
+			return "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		case "Teradata":
+			return "com.teradata.jdbc.TeraDriver";
+		}
+		return "";
 	}
 
 }
