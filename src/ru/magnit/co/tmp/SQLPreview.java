@@ -3,10 +3,13 @@ package ru.magnit.co.tmp;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -26,6 +29,7 @@ public class SQLPreview extends Preview {
 	private JPasswordField jpswPassword;
 	private JCheckBox jchbTrusted;
 	private JTextArea jtxtareaSQLText;
+	private JButton jbtRefreshSQL;
 	
 	public SQLPreview() {
 		super();
@@ -99,6 +103,9 @@ public class SQLPreview extends Preview {
 		
 		jpnlSrsControls.add(jpnlServerSettings);
 		jpnlSrsControls.add(jpnlSQLText);
+		jbtRefreshSQL = new JButton("Refresh");
+		jpnlSrsControls.add(jbtRefreshSQL);
+		jbtRefreshSQL.addActionListener(this);
 		
 		
 		
@@ -108,6 +115,29 @@ public class SQLPreview extends Preview {
 	
 			srcData = new SQLSrcData();
 	
+	}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		try {
+			updateSrcData();
+			prepareTableControls();
+			this.revalidate();
+			this.repaint();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void updateSrcData() throws IOException, ClassNotFoundException, SQLException {
+		SQLSrcData tmp =(SQLSrcData)srcData;
+		tmp.updateData( jcmbServerType.getSelectedItem().toString(), jtfServerAddress.getText(), jcmbLogMech.getSelectedItem().toString() , jchbTrusted.isSelected(), jtfUser.getText(), jpswPassword.getPassword().toString(), jtxtareaSQLText.getText() );		
 	}
 	
 }

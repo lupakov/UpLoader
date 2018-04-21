@@ -2,8 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/lupakov/Downloads/opencsv-4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/lupakov/Downloads/commons-lang3-3.7-bin/commons-lang3-3.7/commons-lang3-3.7.jar"/>
 	<classpathentry kind="lib" path="F:/TeraJDBC/tdgssconfig.jar"/>
 	<classpathentry kind="lib" path="F:/TeraJDBC/terajdbc4.jar"/>
 	<classpathentry kind="lib" path="F:/poi-3.17/poi-3.17.jar"/>
@@ -11,5 +9,8 @@
 	<classpathentry kind="lib" path="F:/poi-3.17/poi-ooxml-schemas-3.17.jar"/>
 	<classpathentry kind="lib" path="F:/poi-3.17/lib/commons-collections4-4.1.jar"/>
 	<classpathentry kind="lib" path="F:/poi-3.17/ooxml-lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="F:/sqljdbc_6.2/enu/mssql-jdbc-6.2.2.jre8.jar"/>
+	<classpathentry kind="lib" path="F:/jLib/opencsv-4.1.jar"/>
+	<classpathentry kind="lib" path="F:/jLib/commons-lang3-3.7/commons-lang3-3.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

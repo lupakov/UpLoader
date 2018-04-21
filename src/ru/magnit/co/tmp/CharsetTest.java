@@ -1,11 +1,16 @@
 package ru.magnit.co.tmp;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.SortedMap;
 import java.util.Vector;
@@ -20,14 +25,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class CharsetTest {
 
-    public static void main(String[] args) throws InvalidFormatException, IOException{
-    	File f = new File("f:\\bt.xlsx");
-       XLSrcData d = new XLSrcData(f);
-       for(Vector<String> tit :d.getData()) {
-    	 
-    	   System.out.println(tit);
-       }
-    //pleaseIterateCol("f:\\test.xlsx",0,1,1);
+    public static void main(String[] args) throws InvalidFormatException, IOException, SQLException, ClassNotFoundException{
+    	SrcConnection c = new SrcConnection("MS SQL", "localhost", null, true, null, null);
+    	Connection con = c.getConnection();
+    	Statement st = con.createStatement();
+    	ResultSet rs = st.executeQuery("SELECT TOP (1000) [productid]  ,[productname] ,[supplierid]  ,[categoryid] FROM [TSQL2012].[Production].[Products]");
+    	while (rs.next()) {
+    		System.out.println(rs.getString("productname"));
+    	}
     }
     
     

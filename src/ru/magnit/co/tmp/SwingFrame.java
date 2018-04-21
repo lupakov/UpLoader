@@ -36,6 +36,7 @@ public class SwingFrame {
 	
 	JFrame jfrm;
 	JPanel jpnlMain;
+	
 	SwingFrame() throws FileNotFoundException, IOException{
 		loadType = 0;
 		con = new DestConnnection();
@@ -174,8 +175,29 @@ public class SwingFrame {
 					e1.printStackTrace();
 				}
 			}
+			/*else if (loadType == 3) {
+				tbl.setConnection(con);
+				tbl.setTableName(jpnlView.getTableName());
+				tbl.setFieldNames(jpnlView.getFieldNames());
+				tbl.setFieldTypes(jpnlView.getFieldTypes());
+				tbl.setIndexes(jpnlView.getIndexes());
+				tbl.setRewriteType(jpnlView.getRewriteType());
+				SQLPreview sqlView = (SQLPreview)jpnlView;
+				//try {
+				//	src = new SQLSrcIterator(txView.getFile(), txView.getSeparator(), txView.getSkipRows(), txView.getCharsetString());
+				//} catch (IOException e1) {
+				//	// TODO Auto-generated catch block
+				//	e1.printStackTrace();
+				//}
+				try {
+					tbl.loadData(src, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 			}
+			}*/
 			
+			}
 		});
 		jtb.add(jbLoad);
 		JButton jbLoadXL = new JButton("LoadXL");
