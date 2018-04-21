@@ -139,5 +139,30 @@ public class SQLPreview extends Preview {
 		SQLSrcData tmp =(SQLSrcData)srcData;
 		tmp.updateData( jcmbServerType.getSelectedItem().toString(), jtfServerAddress.getText(), jcmbLogMech.getSelectedItem().toString() , jchbTrusted.isSelected(), jtfUser.getText(), jpswPassword.getPassword().toString(), jtxtareaSQLText.getText() );		
 	}
+	public String getServerType() {
+		return jcmbServerType.getSelectedItem().toString();
+	}
+	public String getServerAddress() {
+		return jtfServerAddress.getText();
+	}
 	
+	public String getLogMech() {
+		return jcmbLogMech.getSelectedItem().toString();
+	}
+	
+	public boolean getTrusted() {
+		return jchbTrusted.isSelected();
+	}
+	
+	public String getUser() {
+		return jtfUser.getText();
+	}
+	
+	public String getPassword() {
+		return jpswPassword.getPassword().toString();
+	}
+	
+	public String getSQLText() {
+		return jtxtareaSQLText.getText();
+	}
 }

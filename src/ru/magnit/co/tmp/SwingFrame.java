@@ -60,7 +60,7 @@ public class SwingFrame {
 		jtb = new JToolBar();
 		jtb.setFloatable(false);
 		jfrm.add(jpnlMain);
-		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("/res/txt.png"));
+		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("/res/csv_2.png"));
 		JButton jbOpenTxt = new JButton(openTxtIcon);
 
 		
@@ -87,7 +87,7 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenTxt);
-		Icon openXlIcon = new ImageIcon(this.getClass().getResource("/res/xl.png"));
+		Icon openXlIcon = new ImageIcon(this.getClass().getResource("/res/xlsx_2.png"));
 		JButton jbOpenXL = new JButton(openXlIcon);
 		
 		jbOpenXL.addActionListener(new ActionListener() {
@@ -112,7 +112,9 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenXL);
-		JButton jbOpenSQL = new JButton("SQL");
+		
+		Icon openSqlIcon = new ImageIcon(this.getClass().getResource("/res/sql_2.png"));
+		JButton jbOpenSQL = new JButton(openSqlIcon);
 		jbOpenSQL.addActionListener(new ActionListener() {
 			
 			@Override
@@ -132,7 +134,7 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenSQL);
-		Icon uploadIcon = new ImageIcon(this.getClass().getResource("/res/upload.png"));
+		Icon uploadIcon = new ImageIcon(this.getClass().getResource("/res/upl_2.png"));
 		JButton jbLoad = new JButton(uploadIcon);
 		jbLoad.addActionListener(new ActionListener() {
 			
@@ -175,7 +177,7 @@ public class SwingFrame {
 					e1.printStackTrace();
 				}
 			}
-			/*else if (loadType == 3) {
+			else if (loadType == 3) {
 				tbl.setConnection(con);
 				tbl.setTableName(jpnlView.getTableName());
 				tbl.setFieldNames(jpnlView.getFieldNames());
@@ -183,19 +185,22 @@ public class SwingFrame {
 				tbl.setIndexes(jpnlView.getIndexes());
 				tbl.setRewriteType(jpnlView.getRewriteType());
 				SQLPreview sqlView = (SQLPreview)jpnlView;
-				//try {
-				//	src = new SQLSrcIterator(txView.getFile(), txView.getSeparator(), txView.getSkipRows(), txView.getCharsetString());
-				//} catch (IOException e1) {
-				//	// TODO Auto-generated catch block
-				//	e1.printStackTrace();
-				//}
+				try {
+					src = new SQLSrcIterator(sqlView.getServerType(), sqlView.getServerAddress(), sqlView.getLogMech(), sqlView.getTrusted(), sqlView.getUser(), sqlView.getPassword(), sqlView.getSQLText());
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				try {
 					tbl.loadData(src, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 			}
-			}*/
+			}
 			
 			}
 		});
