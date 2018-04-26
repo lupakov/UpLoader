@@ -44,7 +44,7 @@ public class SwingFrame {
 		jpnlMain = new JPanel();
 		jpnlMain.setLayout(new BorderLayout());
 		jfrm = new JFrame("UpLoader");
-		jfrm.setSize(740, 580);
+		jfrm.setSize(1024, 768);
 		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfrm.setLayout(new BorderLayout());
 
@@ -60,7 +60,7 @@ public class SwingFrame {
 		jtb = new JToolBar();
 		jtb.setFloatable(false);
 		jfrm.add(jpnlMain);
-		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("/res/csv_2.png"));
+		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("/res/csv_6.png"));
 		JButton jbOpenTxt = new JButton(openTxtIcon);
 
 		
@@ -87,7 +87,7 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenTxt);
-		Icon openXlIcon = new ImageIcon(this.getClass().getResource("/res/xlsx_2.png"));
+		Icon openXlIcon = new ImageIcon(this.getClass().getResource("/res/xlsx_6.png"));
 		JButton jbOpenXL = new JButton(openXlIcon);
 		
 		jbOpenXL.addActionListener(new ActionListener() {
@@ -113,7 +113,7 @@ public class SwingFrame {
 		});
 		jtb.add(jbOpenXL);
 		
-		Icon openSqlIcon = new ImageIcon(this.getClass().getResource("/res/sql_2.png"));
+		Icon openSqlIcon = new ImageIcon(this.getClass().getResource("/res/sql_6.png"));
 		JButton jbOpenSQL = new JButton(openSqlIcon);
 		jbOpenSQL.addActionListener(new ActionListener() {
 			
@@ -134,7 +134,7 @@ public class SwingFrame {
 			}
 		});
 		jtb.add(jbOpenSQL);
-		Icon uploadIcon = new ImageIcon(this.getClass().getResource("/res/upl_2.png"));
+		Icon uploadIcon = new ImageIcon(this.getClass().getResource("/res/load_6.png"));
 		JButton jbLoad = new JButton(uploadIcon);
 		jbLoad.addActionListener(new ActionListener() {
 			

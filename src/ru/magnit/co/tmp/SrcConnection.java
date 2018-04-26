@@ -72,7 +72,7 @@ public class SrcConnection {
 		sUrl.append(",");
 		sUrl.append("PASSWORD=");
 		sUrl.append(this.password);
-		
+		System.out.println("my pass" +this.password);
 		return sUrl.toString();
 	}
 	

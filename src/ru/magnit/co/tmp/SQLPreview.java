@@ -137,7 +137,7 @@ public class SQLPreview extends Preview {
 	}
 	public void updateSrcData() throws IOException, ClassNotFoundException, SQLException {
 		SQLSrcData tmp =(SQLSrcData)srcData;
-		tmp.updateData( jcmbServerType.getSelectedItem().toString(), jtfServerAddress.getText(), jcmbLogMech.getSelectedItem().toString() , jchbTrusted.isSelected(), jtfUser.getText(), jpswPassword.getPassword().toString(), jtxtareaSQLText.getText() );		
+		tmp.updateData( getServerType(), getServerAddress(), getLogMech() , getTrusted(), getUser(), getPassword(), getSQLText() );		
 	}
 	public String getServerType() {
 		return jcmbServerType.getSelectedItem().toString();
@@ -159,7 +159,11 @@ public class SQLPreview extends Preview {
 	}
 	
 	public String getPassword() {
-		return jpswPassword.getPassword().toString();
+		String passString = new String(jpswPassword.getPassword());
+		System.out.println(passString);
+		System.out.println(new String(jpswPassword.getPassword()));
+		System.out.println(jpswPassword.getPassword());
+		return passString;
 	}
 	
 	public String getSQLText() {

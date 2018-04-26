@@ -68,30 +68,31 @@ public class SAXUploadEngine {
             			this.pStmtDest.setString(i+1, record[i]);
             			break;
             		case 'i':
+            			try {
             			this.pStmtDest.setInt(i+1, Integer.parseInt(record[i]));
+            			} catch (Exception e) {
+            				pStmtDest.setNull(i+1, java.sql.Types.INTEGER );
+            			}
             			break;
             		case 'f':
             			try {
             				this.pStmtDest.setDouble(i+1, (double) doubleFormat.parse(record[i]));
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							pStmtDest.setNull(i+1, java.sql.Types.DOUBLE );
 						}
             			break;
             		case 'd':
             			try {
             				this.pStmtDest.setDate(i + 1,new java.sql.Date(dateFormatter.parse(record[i]).getTime()) );
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							pStmtDest.setNull(i+1, java.sql.Types.DATE );
 						}
             			break;
             		case 't':
             			try {
             				this.pStmtDest.setTimestamp(i +1 , new java.sql.Timestamp(timestampFormatter.parse(record[i]).getTime()));
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							pStmtDest.setNull(i+1, java.sql.Types.TIMESTAMP );
 						}
             			break;
             		}

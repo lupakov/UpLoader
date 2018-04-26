@@ -51,7 +51,7 @@ public class SQLSrcData implements SrcData {
 		types = new Vector<>();
 		SrcConnection connection = new SrcConnection(serverType, serverAddress, logMech, trusted, user, password);
 		try(Connection con = connection.getConnection()){
-			Statement stmt = con.createStatement();
+			Statement stmt = con.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
 			ResultSet rs = stmt.executeQuery(sql);
 			int recordCount = 0;
 			int columnCount = rs.getMetaData().getColumnCount();
@@ -62,9 +62,11 @@ public class SQLSrcData implements SrcData {
 			while(rs.next() & recordCount < 30) {
 				for (int i = 1; i <= columnCount; i++) {
 					rec.addElement(rs.getString(i));
+					
 				}
 				data.add(rec);
 				rec = new Vector<String>();
+				recordCount++;
 			}
 		}
 		types = new Vector<Integer>();

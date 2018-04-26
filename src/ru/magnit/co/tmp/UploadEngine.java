@@ -69,30 +69,31 @@ public class UploadEngine {
             			pStmtDest.setString(i+1, record[i]);
             			break;
             		case 'i':
+            			try {
             			pStmtDest.setInt(i+1, Integer.parseInt(record[i]));
+            			}catch(Exception e) {
+            				pStmtDest.setNull(i+1, java.sql.Types.INTEGER );
+            			}
             			break;
             		case 'f':
             			try {
 							pStmtDest.setDouble(i+1, (double) doubleFormat.parse(record[i]));
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						} catch (Exception e) {
+							pStmtDest.setNull(i+1, java.sql.Types.DOUBLE );
 						}
             			break;
             		case 'd':
             			try {
 							pStmtDest.setDate(i + 1,new java.sql.Date(dateFormatter.parse(record[i]).getTime()) );
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						} catch (Exception e) {
+							pStmtDest.setNull(i+1, java.sql.Types.DATE );
 						}
             			break;
             		case 't':
             			try {
 							pStmtDest.setTimestamp(i +1 , new java.sql.Timestamp(timestampFormatter.parse(record[i]).getTime()));
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						} catch (Exception e) {
+							pStmtDest.setNull(i+1, java.sql.Types.TIMESTAMP );
 						}
             			break;
             		}
