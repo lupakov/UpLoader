@@ -17,7 +17,7 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 
-public class TextSrcData implements SrcData {
+public class TextSrcData extends CommonSrcData {
 	ArrayList<String[]> records;
 	Vector<String> headers;
 	Vector<Vector<String>> data;
@@ -65,6 +65,7 @@ public class TextSrcData implements SrcData {
 			int recordCounter = 0;
 			while ((nextRecord = csvReader.readNext())!= null & recordCounter < 30) {
 				records.add(nextRecord);
+				recordCounter++;
 			}
 		}
 	}

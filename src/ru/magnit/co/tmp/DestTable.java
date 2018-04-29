@@ -99,12 +99,15 @@ public class DestTable {
 		}
 		
 	}
-	public void loadData(Iterator<String[]> data, char digSep, String dFrmt, String tFrmt) throws SQLException {
+	public void loadData(Iterator<String[]> data, ArrayList<LoadEngineListener> listeners, char digSep, String dFrmt, String tFrmt) throws SQLException {
 		createTable();
 		eng = new UploadEngine(tableName, fieldTypesToChar(), data);
 		eng.setDigitSeparator(digSep);
 		eng.setTimestampFormat(tFrmt);
 		eng.setDateFormat(dFrmt);
+		for (LoadEngineListener listener: listeners) {
+			eng.addListener(listener);
+		}
 		try(Connection con = connection.getConnection()){
 			eng.upload(con);
 		}

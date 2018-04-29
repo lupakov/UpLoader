@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class UploadEngine {
+public class UploadEngine extends LoadEngine {
 	private String tableName;
 	private char[] fieldTypes;
 	private Iterator<String[]> srcIterator;
@@ -101,6 +101,7 @@ public class UploadEngine {
             	
             	pStmtDest.addBatch();
             	recCounter ++;
+            	this.fireCurrentRow(recCounter);
             	if(recCounter == batchFreq ) {
             		w = pStmtDest.getWarnings();
                     while(w != null){
@@ -164,7 +165,7 @@ public class UploadEngine {
                 + "\n" + sw.toString());
                 w = w.getNextWarning();
             }
-            
+            this.fireCurrentRow(0);
 			
 		}
 		

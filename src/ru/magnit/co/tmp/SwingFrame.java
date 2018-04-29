@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.*;
@@ -37,6 +38,9 @@ public class SwingFrame {
 	JFrame jfrm;
 	JPanel jpnlMain;
 	
+	JStatusBar jpnlStatus;
+	ArrayList<LoadEngineListener> listeners = new ArrayList<>();
+	JButton jbLoad;
 	SwingFrame() throws FileNotFoundException, IOException{
 		loadType = 0;
 		con = new DestConnnection();
@@ -52,8 +56,9 @@ public class SwingFrame {
 		jmFileMenu = new JMenu("Файл");
 
 		jmExitItem = new JMenuItem("Выход") ;
-
-	
+		jpnlStatus = new JStatusBar();
+		jfrm.add(jpnlStatus, BorderLayout.SOUTH);
+		listeners.add(jpnlStatus);
 		//jmFileMenu.add(jmExitItem);
 
 		jmb.add(jmFileMenu);
@@ -62,7 +67,7 @@ public class SwingFrame {
 		jfrm.add(jpnlMain);
 		Icon openTxtIcon = new ImageIcon(this.getClass().getResource("/res/csv_6.png"));
 		JButton jbOpenTxt = new JButton(openTxtIcon);
-
+		
 		
 		
 		jbOpenTxt.addActionListener(new ActionListener() {
@@ -135,72 +140,82 @@ public class SwingFrame {
 		});
 		jtb.add(jbOpenSQL);
 		Icon uploadIcon = new ImageIcon(this.getClass().getResource("/res/load_6.png"));
-		JButton jbLoad = new JButton(uploadIcon);
+		jbLoad = new JButton(uploadIcon);
 		jbLoad.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if (loadType == 1 ) {
-				tbl.setConnection(con);
-				tbl.setTableName(jpnlView.getTableName());
-				tbl.setFieldNames(jpnlView.getFieldNames());
-				tbl.setFieldTypes(jpnlView.getFieldTypes());
-				tbl.setIndexes(jpnlView.getIndexes());
-				tbl.setRewriteType(jpnlView.getRewriteType());
-				TextPreview txView = (TextPreview)jpnlView;
-				try {
-					src = new TextSrcIterator(txView.getFile(), txView.getSeparator(), txView.getSkipRows(), txView.getCharsetString());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					tbl.loadData(src, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}else if (loadType == 2) {
-				tbl.setConnection(con);
-				tbl.setTableName(jpnlView.getTableName());
-				tbl.setFieldNames(jpnlView.getFieldNames());
-				tbl.setFieldTypes(jpnlView.getFieldTypes());
-				tbl.setIndexes(jpnlView.getIndexes());
-				tbl.setRewriteType(jpnlView.getRewriteType());
-				XLPreview xlView = (XLPreview)jpnlView;
-				SAXSrcHandler srcHandler = new SAXSrcHandler(xlView.getFile(), xlView.getSheetName(), xlView.getSkipRows());
-				try {
-					tbl.loadSAXData(srcHandler, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
-				} catch (SQLException | InvalidFormatException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-			else if (loadType == 3) {
-				tbl.setConnection(con);
-				tbl.setTableName(jpnlView.getTableName());
-				tbl.setFieldNames(jpnlView.getFieldNames());
-				tbl.setFieldTypes(jpnlView.getFieldTypes());
-				tbl.setIndexes(jpnlView.getIndexes());
-				tbl.setRewriteType(jpnlView.getRewriteType());
-				SQLPreview sqlView = (SQLPreview)jpnlView;
-				try {
-					src = new SQLSrcIterator(sqlView.getServerType(), sqlView.getServerAddress(), sqlView.getLogMech(), sqlView.getTrusted(), sqlView.getUser(), sqlView.getPassword(), sqlView.getSQLText());
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				try {
-					tbl.loadData(src, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-			}
-			}
+				Runnable runner = new Runnable() {
+					
+					@Override
+					public void run() {
+						jbLoad.setEnabled(false);
+						if (loadType == 1 ) {
+							tbl.setConnection(con);
+							tbl.setTableName(jpnlView.getTableName());
+							tbl.setFieldNames(jpnlView.getFieldNames());
+							tbl.setFieldTypes(jpnlView.getFieldTypes());
+							tbl.setIndexes(jpnlView.getIndexes());
+							tbl.setRewriteType(jpnlView.getRewriteType());
+							TextPreview txView = (TextPreview)jpnlView;
+							try {
+								src = new TextSrcIterator(txView.getFile(), txView.getSeparator(), txView.getSkipRows(), txView.getCharsetString());
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+							try {
+								tbl.loadData(src,listeners, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}else if (loadType == 2) {
+							tbl.setConnection(con);
+							tbl.setTableName(jpnlView.getTableName());
+							tbl.setFieldNames(jpnlView.getFieldNames());
+							tbl.setFieldTypes(jpnlView.getFieldTypes());
+							tbl.setIndexes(jpnlView.getIndexes());
+							tbl.setRewriteType(jpnlView.getRewriteType());
+							XLPreview xlView = (XLPreview)jpnlView;
+							SAXSrcHandler srcHandler = new SAXSrcHandler(xlView.getFile(), xlView.getSheetName(), xlView.getSkipRows());
+							try {
+								tbl.loadSAXData(srcHandler, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
+							} catch (SQLException | InvalidFormatException | IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else if (loadType == 3) {
+							tbl.setConnection(con);
+							tbl.setTableName(jpnlView.getTableName());
+							tbl.setFieldNames(jpnlView.getFieldNames());
+							tbl.setFieldTypes(jpnlView.getFieldTypes());
+							tbl.setIndexes(jpnlView.getIndexes());
+							tbl.setRewriteType(jpnlView.getRewriteType());
+							SQLPreview sqlView = (SQLPreview)jpnlView;
+							try {
+								src = new SQLSrcIterator(sqlView.getServerType(), sqlView.getServerAddress(), sqlView.getLogMech(), sqlView.getTrusted(), sqlView.getUser(), sqlView.getPassword(), sqlView.getSQLText());
+							} catch (ClassNotFoundException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							try {
+								tbl.loadData(src,listeners, jpnlView.getDigSeparator(), jpnlView.getFrmtDate(), jpnlView.getFrmtTimestamp());
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+						}
+						}
+						jbLoad.setEnabled(true);
+					}
+				};
+				(new Thread (runner)).start();
 			
 			}
 		});
@@ -233,6 +248,8 @@ public class SwingFrame {
 		jfrm.add(jtb,BorderLayout.NORTH);
 
 		jfrm.add(jpnlMain,BorderLayout.CENTER);
+		
+
 
 		
 

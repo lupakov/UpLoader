@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Locale;
 
-public class SAXUploadEngine {
+public class SAXUploadEngine extends LoadEngine{
 	private String tableName;
 	private char[] fieldTypes;
 	private Iterator<String[]> srcIterator;

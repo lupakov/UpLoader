@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
-public class SQLSrcData implements SrcData {
+public class SQLSrcData extends CommonSrcData {
 	Vector<Vector<String>> data;
 	Vector<String> headers;
 	Vector<Integer> types;

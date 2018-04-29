@@ -29,7 +29,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 
 
-public class XLSrcData implements SrcData {
+public class XLSrcData extends CommonSrcData {
 
 	ArrayList<ArrayList<ArrayList<String>>> sheetRecords;
 	ArrayList<String> sheets;
